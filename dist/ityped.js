@@ -11,7 +11,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     define([], factory);
   } else if ((typeof exports === "undefined" ? "undefined" : _typeof(exports)) === "object") {
     module.exports = {
-      init: factory.init
+      init: factory.init,
+      destroy: factory.destroy
     };
   } else {
     root.ityped = factory;
@@ -63,7 +64,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    */
   function setProps(config) {
     var props = config;
-    props.strings = config.strings || ['Put you string here...', 'and Enjoy!'];
+    props.strings = config.strings || ['Put your string here...', 'and Enjoy!'];
     props.typeSpeed = config.typeSpeed || 100;
     props.backSpeed = config.backSpeed || 50;
     props.backDelay = config.backDelay || 500;
@@ -79,11 +80,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }
   /**
    * @name init
-   * @param {String} element The element that will receive the strings
+   * @param { String || Element } element The element that will receive the strings
    * @param {Object} config The initial configuration
    */
   function init(element, config) {
-    selectedElement = document.querySelector(element);
+    typeof element === 'string' ? selectedElement = document.querySelector(element) : selectedElement = element;
     setProps(config).then(function (properties) {
       props = properties;
       loopingOnWords(props.strings);
@@ -238,8 +239,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }
 
   /**
+   * @name destroy
+   * @description destroy the onFinished function
+   */
+  function destroy() {
+    props.onFinished = function () {
+      return void 0;
+    };
+  }
+
+  /**
    * Return the init function
    */
-  return { init: init };
+  return { init: init, destroy: destroy };
 }(this));
 //# sourceMappingURL=ityped.js.map

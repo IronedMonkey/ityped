@@ -1,6 +1,6 @@
 # iTyped
 
-[![npm package](https://img.shields.io/badge/npm-v0.0.6-lightgray.svg)](https://www.npmjs.com/package/ityped)
+[![npm package](https://img.shields.io/badge/npm-v0.0.9-lightgray.svg)](https://www.npmjs.com/package/ityped)
 
 > Dead simple Animated typing, with no dependencies.
 
@@ -16,7 +16,7 @@ Enter in any string, and watch it type at the speed you've set, backspace what i
 and begin a new sentence for however many strings you've set.
 
 ## Why should you use iTyped?
- * iTyped has a tiny size: 2.2kB
+ * iTyped has a tiny size: 2.3kB
  * No jQuery dependency
  * Just install and enjoy!
 
@@ -26,13 +26,13 @@ At now, if you just need to render Strings, **iTyped** is the best solution for 
 #### Install
 
 Npm: `npm install ityped` </br>
-CDN: `https://unpkg.com/ityped@0.0.6`
+CDN: `https://unpkg.com/ityped@0.0.9`
 
 
 #### The Gist:
 
 ```javascript
-import { init } from 'ityped';
+import { init, destroy } from 'ityped';
 
 init(`#element`, {
   // required - for now, only accepting texts
@@ -95,10 +95,13 @@ init(`#element`, {
 /**
  * @name init
  * @description Init the typed animation
- * @param {String} element The Element that will receive the strings
+ * @param {String || Element } element The Element that will receive the strings
  * @param {Object} config The typed configuration
  */
-
+ const element = document.querySelector('#element')
+ // you can
+ init(element, config);
+ // or
  init('#element', config);
 ```
 
@@ -106,6 +109,17 @@ init(`#element`, {
 
 <span id="element"></span>
 
+```
+
+ Destroy
+
+```javascript
+/**
+ * @name destroy
+ * @description Destroy the onFinished function
+ */
+
+ destroy();
 ```
 
 iTyped Configuration
@@ -128,15 +142,15 @@ iTyped Configuration
   const config = {
     strings: ['Dead simple animated typing.', 'No dependencies'],
     //optional
-    typeSpeed: 100, //default
+    typeSpeed:  100, //default
     //optional
-    backSpeed: 50, //default
+    backSpeed:  50, //default
     //optional
     startDelay: 500, //default
     //optional
-    backDelay: 500, //default
+    backDelay:  500, //default
     //optional    
-    loop: false, //default
+    loop:       false, //default
     //optional
     showCursor: true, //default
     //optional    

@@ -9,7 +9,8 @@
     define([], factory);
   } else if (typeof exports === "object") {
     module.exports = {
-      init: factory.init
+      init: factory.init,
+      destroy: factory.destroy
     }
   } else {
     root.ityped = factory;
@@ -65,7 +66,7 @@
    */
   function setProps ( config ) {
     let props = config;
-    props.strings    = config.strings    || ['Put you string here...', 'and Enjoy!']
+    props.strings    = config.strings    || ['Put your string here...', 'and Enjoy!']
     props.typeSpeed  = config.typeSpeed  || 100;
     props.backSpeed  = config.backSpeed  || 50;
     props.backDelay  = config.backDelay  || 500;
@@ -81,11 +82,13 @@
   }
   /**
    * @name init
-   * @param {String} element The element that will receive the strings
+   * @param { String || Element } element The element that will receive the strings
    * @param {Object} config The initial configuration
    */
   function init(element, config) {
-    selectedElement = document.querySelector(element);
+    typeof element === 'string' 
+      ? selectedElement = document.querySelector(element)
+      : selectedElement = element;
     setProps(config).then(function(properties){
       props = properties;
       loopingOnWords(props.strings);
@@ -234,7 +237,15 @@
   }
 
   /**
+   * @name destroy
+   * @description destroy the onFinished function
+   */ 
+  function destroy () {
+    props.onFinished = function(){return void 0};
+  }
+
+  /**
    * Return the init function
    */
-  return {init}
+  return {init, destroy}
 }(this)));
